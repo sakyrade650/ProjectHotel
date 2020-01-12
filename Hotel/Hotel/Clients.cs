@@ -18,7 +18,9 @@ namespace Hotel
         private char Sex { get; set; }
         private int FloorNumber { get; set; }
         private int RoomNumber { get; set; }
-        private double MoneyForRoom { get; set; }
+        private string Address { get; set; }
+        private double SalaryRoom { get; set; }
+        private RoomCathegories roomCathegories { get; set; }
         public DateTime dateOfArrivalAtHotel { get; set; }
         public DateTime departureDate { get; set; }
         public Clients(int FloorNumber, int RoomNumber)
@@ -26,7 +28,7 @@ namespace Hotel
             this.FloorNumber = FloorNumber;
             this.RoomNumber = RoomNumber;
         }
-        public Clients(string Name, string Surname, string LastName, int Age, DateTime dB, char Sex)
+        public Clients(string Name, string Surname, string LastName, int Age, DateTime dB, char Sex, string Address, double salary, RoomCathegories roomCathegories)
         {
             this.Name = Name;
             this.Surname = Surname;
@@ -34,6 +36,9 @@ namespace Hotel
             this.Age = Age;
             this.DateBithday = dB;
             this.Sex = Sex;
+            this.Address = Address;
+            this.SalaryRoom = salary;
+            this.roomCathegories = roomCathegories;
         }
 
         //Удаление этажа и номера из массива

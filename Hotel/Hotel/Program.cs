@@ -36,11 +36,15 @@ namespace Hotel
                     ReadLine();
                     sr.Close();
                 }
+                ReadLine();
                 Clear();
-                Menu();
             }
             else
+            {
                 WriteLine("Файла с пажами не существует.");
+                ReadLine();
+                Clear();
+            }
             if (File.Exists(Environment.CurrentDirectory + "/maids.txt"))
             {
                 using (StreamReader sr = new StreamReader("maids.txt"))
@@ -53,11 +57,15 @@ namespace Hotel
                     ReadLine();
                     sr.Close();
                 }
+                ReadLine();
                 Clear();
-                Menu();
             }
             else
+            {
                 WriteLine("Файла с горничными не существует.");
+                ReadLine();
+                Clear();
+            }
             if (File.Exists(Environment.CurrentDirectory + "/workmans.txt"))
             {
                 using (StreamReader sr = new StreamReader("workmans.txt"))
@@ -70,8 +78,6 @@ namespace Hotel
                     ReadLine();
                     sr.Close();
                 }
-                Clear();
-                Menu();
             }
             else
                 WriteLine("Файла с рабочими не существует.");
@@ -100,7 +106,7 @@ namespace Hotel
                 string surname = ReadLine();
                 Write("Введите отчество: ");
                 string lastName = ReadLine();
-            restart:
+                restart:
                 Write("Полных лет: ");
                 int age = ToInt32(ReadLine());
                 if (age < 18)
@@ -116,7 +122,9 @@ namespace Hotel
                     WriteLine("Год рождения не совпадает с датой. Попробуйте снова.");
                     goto restart;
                 }
-            restart2:
+                Write("Введите адрес проживания: ");
+                string address = ReadLine();
+                restart2:
                 WriteLine("Пол: Ж, М?");
                 char sex = ToChar(ReadLine());
                 if (sex != 1046 && sex != 1052 && sex != 1078 && sex != 1084)
@@ -124,7 +132,7 @@ namespace Hotel
                     Write("Некорректно введён пол. Попробуйте снова.");
                     goto restart2;
                 }
-                if (name != null && surname != null && lastName != null)
+                if (name != null && surname != null && lastName != null && address != null)
                 {
                 restart3:
                     WriteLine("Вакансии:");
@@ -149,11 +157,11 @@ namespace Hotel
                                     ReadLine();
                                     goto case '1';
                                 }
-                                henchman = new Henchmans(name, surname, lastName, age, dB, sex, WorkExp);
+                                henchman = new Henchmans(name, surname, lastName, age, dB, sex, WorkExp, address);
                                 using (StreamWriter sw = new StreamWriter("henchmans.txt", true))
                                 {
                                     string[] tmp = { "   Номер пажа: " + CountHenchmans + Environment.NewLine + '{' + Environment.NewLine + "   Имя: " + name + Environment.NewLine + "   Фамилия: " + surname + Environment.NewLine +
-                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine +
+                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine + "   Адрес проживания: " + address + Environment.NewLine +
                                 "   Пол: " + sex.ToString() + Environment.NewLine + Environment.NewLine + "   Стаж: " + WorkExp + Environment.NewLine +
                                 "   З/п: " + Henchmans.Salary + Environment.NewLine + '}' };
                                     foreach (string t in tmp)
@@ -185,11 +193,11 @@ namespace Hotel
                                     ReadLine();
                                     goto case '2';
                                 }
-                                maid = new Maids(name, surname, lastName, age, dB, sex, WorkExp);
+                                maid = new Maids(name, surname, lastName, age, dB, sex, WorkExp, address);
                                 using (StreamWriter sw = new StreamWriter("maids.txt", true))
                                 {
                                     string[] tmp = { "   Номер горничной(ого): " + CountMaids + Environment.NewLine + '{' + Environment.NewLine + "   Имя: " + name + Environment.NewLine + "   Фамилия: " + surname + Environment.NewLine +
-                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine +
+                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine + "   Адрес проживания: " + address + Environment.NewLine +
                                 "   Пол: " + sex.ToString() + Environment.NewLine + Environment.NewLine + "   Стаж: " + WorkExp + Environment.NewLine +
                                 "   З/п: " + Maids.Salary + Environment.NewLine + '}' };
                                     foreach (string t in tmp)
@@ -221,11 +229,11 @@ namespace Hotel
                                     ReadLine();
                                     goto case '3';
                                 }
-                                workman = new Workmans(name, surname, lastName, age, dB, sex, WorkExp);
+                                workman = new Workmans(name, surname, lastName, age, dB, sex, WorkExp, address);
                                 using (StreamWriter sw = new StreamWriter("henchmans.txt", true))
                                 {
                                     string[] tmp = { "   Номер рабочего: " + CountWorkmans + Environment.NewLine + '{' + Environment.NewLine + "   Имя: " + name + Environment.NewLine + "   Фамилия: " + surname + Environment.NewLine +
-                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine +
+                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine + "   Адрес проживания: " + address + Environment.NewLine + 
                                 "   Пол: " + sex.ToString() + Environment.NewLine + Environment.NewLine + "   Стаж: " + WorkExp + Environment.NewLine +
                                 "   З/п: " + Workmans.Salary + Environment.NewLine + '}' };
                                     foreach (string t in tmp)
@@ -464,19 +472,31 @@ namespace Hotel
                     Clear();
                     Menu();
                 }
-                hostel = new Hostel(nameHotel, stars);
-                WriteLine("Отель успешно создан!");
-                using (StreamWriter sw = new StreamWriter("hotel.txt", true))
+                Write("Введите адрес, на котором находится отель: ");
+                string address = ReadLine();
+                if (nameHotel != null && address != null)
                 {
-                    string[] tmp = {'{' + Environment.NewLine + "   Название отеля: " + nameHotel + Environment.NewLine +
+                    hostel = new Hostel(nameHotel, stars, address);
+                    WriteLine("Отель успешно создан!");
+                    using (StreamWriter sw = new StreamWriter("hotel.txt", true))
+                    {
+                        string[] tmp = {'{' + Environment.NewLine + "   Название отеля: " + nameHotel + Environment.NewLine + "   Адрес: " + address + Environment.NewLine +
                             "   Количество звёзд: " + stars + Environment.NewLine + '}' };
-                    foreach (string t in tmp)
-                        sw.WriteLine(t);
-                    sw.Close();
+                        foreach (string t in tmp)
+                            sw.WriteLine(t);
+                        sw.Close();
+                    }
+                    ReadLine();
+                    Clear();
+                    Menu();
                 }
-                ReadLine();
-                Clear();
-                Menu();
+                else
+                {
+                    WriteLine("Поля не заполнены. Попробуйте снова.");
+                    ReadLine();
+                    Clear();
+                    registrationHostel();
+                }
             }
             catch (Exception e)
             {
@@ -543,7 +563,7 @@ namespace Hotel
                 string surname = ReadLine();
                 Write("Введите отчество: ");
                 string lastName = ReadLine();
-            restart:
+                restart:
                 Write("Полных лет: ");
                 int age = ToInt32(ReadLine());
                 if (age < 18)
@@ -559,7 +579,9 @@ namespace Hotel
                     WriteLine("Год рождения не совпадает с датой. Попробуйте снова.");
                     goto restart;
                 }
-            restart2:
+                Write("Введите адрес проживания: ");
+                string address = ReadLine();
+                restart2:
                 WriteLine("Пол: Ж, М?");
                 char sex = ToChar(ReadLine());
                 if (sex != 1046 && sex != 1052 && sex != 1078 && sex != 1084)
@@ -567,10 +589,10 @@ namespace Hotel
                     Write("Некорректно введён пол. Попробуйте снова.");
                     goto restart2;
                 }
-            restart3:
-                WriteLine("Введите дату заезда: ");
+                restart3:
+                Write("Введите дату заезда: ");
                 DateTime dStayInHotel1 = ToDateTime(ReadLine());
-                WriteLine("Введите дату выезда: ");
+                Write("Введите дату выезда: ");
                 DateTime dStayInHotel2 = ToDateTime(ReadLine());
                 if (DateTime.Now.Year > dStayInHotel1.Year && DateTime.Now.Year < dStayInHotel1.Year ||
                     DateTime.Now.Year > dStayInHotel2.Year && DateTime.Now.Year < dStayInHotel2.Year ||
@@ -584,14 +606,48 @@ namespace Hotel
                     WriteLine("Нельзя останавливаться в отеле более чем на 20 дней. Попробуйте снова.");
                     goto restart3;
                 }
-                if (name != null && surname != null && lastName != null)
+                if (name != null && surname != null && lastName != null && address != null)
                 {
                     if (CountClients != 100)
                     {
+                        restart5:
+                        Clear();
+                        WriteLine("------------Типы номеров------------");
+                        WriteLine("1. Standart;");
+                        WriteLine("2. Economy;");
+                        WriteLine("3. JuniorSuite;");
+                        WriteLine("4. Luxe.");
+                        WriteLine("В какой хотите поселиться?");
+                        int tt = ToInt32(ReadLine());
+                        RoomCathegories roomCathegories = RoomCathegories.Standart;
+                        double salary = 0;
+                        switch (tt)
+                        {
+                            case 1:
+                                roomCathegories = RoomCathegories.Standart;
+                                salary = hostel.RoomRate(dStayInHotel1, dStayInHotel2);
+                                break;
+                            case 2:
+                                roomCathegories = RoomCathegories.Economy;
+                                salary = hostel.RoomRate(dStayInHotel1, dStayInHotel2) - 800;
+                                break;
+                            case 3:
+                                roomCathegories = RoomCathegories.JuniorSuite;
+                                salary = hostel.RoomRate(dStayInHotel1, dStayInHotel2) + 1200;
+                                break;
+                            case 4:
+                                roomCathegories = RoomCathegories.Luxe;
+                                salary = hostel.RoomRate(dStayInHotel1, dStayInHotel2) + 2500;
+                                break;
+                            default:
+                                WriteLine("Неверный пункт. Попробуйте снова.");
+                                ReadLine();
+                                goto restart5;
+                        }
                         CountClients++;
-                        Clients client = new Clients(name, surname, lastName, age, dB, sex);
+                        Clients client = new Clients(name, surname, lastName, age, dB, sex, address, salary, roomCathegories);
                         WriteLine("Клиент успешно добавлен!");
-                    restart4:
+                        restart4:
                         Clear();
                         WriteLine("Забронируйте номер.");
                         hostel.OutputInHotel();
@@ -601,6 +657,34 @@ namespace Hotel
                         int floor = ToInt32(ReadLine());
                         if (floor <= 4 || numberRoom <= 25)
                         {
+                            if (roomCathegories == RoomCathegories.Standart && floor != 1)
+                            {
+                                WriteLine("1 этаж - Standart. Попробуйте снова.");
+                                ReadLine();
+                                Clear();
+                                goto restart4;
+                            }
+                            if (roomCathegories == RoomCathegories.Economy && floor != 2)
+                            {
+                                WriteLine("2 этаж - Economy. Попробуйте снова.");
+                                ReadLine();
+                                Clear();
+                                goto restart4;
+                            }
+                            if (roomCathegories == RoomCathegories.JuniorSuite && floor != 3)
+                            {
+                                WriteLine("3 этаж - JuniorSuite(Полулюкс). Попробуйте снова.");
+                                ReadLine();
+                                Clear();
+                                goto restart4;
+                            }
+                            if (roomCathegories == RoomCathegories.Luxe && floor != 4)
+                            {
+                                WriteLine("4 этаж - Luxe. Попробуйте снова.");
+                                ReadLine();
+                                Clear();
+                                goto restart4;
+                            }
                             if (client.ReservationRoom(floor, numberRoom) == false)
                                 goto restart4;
                             else WriteLine("Номер забронирован!");
@@ -613,10 +697,11 @@ namespace Hotel
                         using (StreamWriter sw = new StreamWriter("clients.txt", true))
                         {
                             string[] tmp = { "   Номер клиента: " + CountClients + Environment.NewLine + '{' + Environment.NewLine + "   Имя: " + name + Environment.NewLine + "   Фамилия: " + surname + Environment.NewLine +
-                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine +
+                                "   Отчество: " + lastName + Environment.NewLine + "   Возраст: " + age.ToString() + Environment.NewLine + "   Дата рождения: " + dB.ToShortDateString() + Environment.NewLine + "   Адрес проживания: " + address + Environment.NewLine +
                                 "   Пол: " + sex.ToString() + Environment.NewLine +
                                 "   Дата заезда: " + dStayInHotel1.ToShortDateString() + Environment.NewLine + "   Дата выезда: " + dStayInHotel2.ToShortDateString() + Environment.NewLine + "   Этаж: " + floor + Environment.NewLine +
-                                "   Номер: " + numberRoom + Environment.NewLine + '}' };
+                                "   Номер: " + numberRoom + Environment.NewLine +
+                                "   Стоимость номера: " + salary + Environment.NewLine + "   Тип номера: " + roomCathegories.ToString() + Environment.NewLine + '}' };
                             foreach (string t in tmp)
                                 sw.WriteLine(t);
                             sw.Close();
@@ -706,7 +791,7 @@ namespace Hotel
                         Menu();
                         break;
                     case '5': outputInfoClients(); break;
-                    case '6': outputInfoClients(); break;
+                    case '6': outputPersonal(); break;
                     case '7': controlCheckInAndOut(); break;
                     case '0':
                         Environment.Exit(0);
@@ -737,6 +822,7 @@ namespace Hotel
                     {
                         string tmp;
                         string hotelName = "";
+                        string address = "";
                         int stars = 0;
                         do
                         {
@@ -745,8 +831,10 @@ namespace Hotel
                                 hotelName = tmp.Remove(0, 19);
                             if (tmp.Contains("   Количество звёзд: "))
                                 stars = ToInt32(tmp.Remove(0, 21));
+                            if (tmp.Contains("   Адрес: "))
+                                address = tmp.Remove(0, 10);
                         } while (sr.EndOfStream != true);
-                        hostel = new Hostel(hotelName, stars);
+                        hostel = new Hostel(hotelName, stars, address);
                     }
                 }
                 if (File.Exists(Environment.CurrentDirectory + "/clients.txt"))

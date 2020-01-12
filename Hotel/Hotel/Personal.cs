@@ -14,6 +14,7 @@ namespace Hotel
         protected int Age { get; set; } 
         protected DateTime DateBithday { get; set; }
         protected char Sex { get; set; }
+        protected string Address { get; set; }
         protected int WorkExp { get; set; }
     }
 }

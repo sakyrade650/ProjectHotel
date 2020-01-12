@@ -10,7 +10,7 @@ namespace Hotel
     {
         //Те, кто принимает груз
         public static readonly double Salary = 30500;
-        public Henchmans(string Name, string Surname, string LastName, int Age, DateTime dB, char Sex, int WorkExp)
+        public Henchmans(string Name, string Surname, string LastName, int Age, DateTime dB, char Sex, int WorkExp, string Address)
         {
             Console.WriteLine($"Паж {this.Name} успешно добавлен(а)!");
             this.Name = Name;
@@ -19,6 +19,7 @@ namespace Hotel
             this.Age = Age;
             this.DateBithday = dB;
             this.Sex = Sex;
+            this.Address = Address;
             this.WorkExp = WorkExp;
         }
     }

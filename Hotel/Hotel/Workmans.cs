@@ -9,7 +9,7 @@ namespace Hotel
     class Workmans : Personal
     {
         public static readonly double Salary = 20554;
-        public Workmans(string Name, string Surname, string LastName, int Age, DateTime dB, char Sex, int WorkExp)
+        public Workmans(string Name, string Surname, string LastName, int Age, DateTime dB, char Sex, int WorkExp, string Address)
         {
             Console.WriteLine($"Рабочий(ая) {this.Name} успешно добавлен(а)!");
             this.Name = Name;
@@ -18,6 +18,7 @@ namespace Hotel
             this.Age = Age;
             this.DateBithday = dB;
             this.Sex = Sex;
+            this.Address = Address;
             this.WorkExp = WorkExp;
         }
     }

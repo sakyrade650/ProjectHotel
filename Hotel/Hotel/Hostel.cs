@@ -7,24 +7,27 @@ using static System.Console;
 
 namespace Hotel
 {
+    public enum RoomCathegories { Standart, Economy, JuniorSuite, Luxe }
     class Hostel
     {
         private string HostelName { get; set; }
         private int stars { get; set; }
         protected const int floors = 4;
         protected const int countRoomsOnEachFloor = 25;
-        public const double roomSalary = 1180;
-        public const double NDS = 47.20;
+        private const double roomSalary = 1180;
+        private const double NDS = 47.20;
         private int countRoomFree { get; set; }
         private int countOccupied { get; set; }
+        private string Address { get; set; }
         protected static int[,] hotel = new int[floors, countRoomsOnEachFloor];
         public Hostel()
         {
         }
-        public Hostel(string HostelName, int stars)
+        public Hostel(string HostelName, int stars, string Address)
         {
             this.HostelName = HostelName;
             this.stars = stars;
+            this.Address = Address;
             for (int i = 0; i < floors; i++)
                 for (int j = 0; j < countRoomsOnEachFloor; j++) hotel[i, j] = 0;
         }
@@ -92,10 +95,10 @@ namespace Hotel
         }
 
         //Расчет стоимости проживания в номере
-        public double RoomRate(double rSal, DateTime dateOfArrivalAtHotel, DateTime departureDate)
+        public double RoomRate(DateTime dateOfArrivalAtHotel, DateTime departureDate)
         {
             int date = departureDate.Day - dateOfArrivalAtHotel.Day;
-            return rSal * date + NDS;
+            return roomSalary * date + NDS;
         }
     }
 }
